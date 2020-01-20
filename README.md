@@ -9,7 +9,7 @@ Spinnaker operators deploying to AWS often need visibility into what APIs Spinna
 - [Requirements](#Requirements)
 - [Getting started](#getting-started)
 - [Creating a trail](#creating-a-trail)
-- [Creating a table in Athena](creating-a-table-in-athena)
+- [Creating a table in Athena](#creating-a-table-in-athena)
 - [Query Spinnaker calls](#query-spinnaker-calls)
 - [Pricing](#pricing)
 
@@ -86,7 +86,7 @@ Now you're ready to query your Spinnaker API calls!
 
 It can be useful to see how many times Spinnaker called various APIs within a certain timeframe. If you know the ARN of the role Spinnaker is assuming to take actions in your account, you can query the number of calls made within a set time period by that role.
 
-For example, the below query counts the number of different API event (service calls) made by Spinnaker in the last hour, grouped by error code.
+For example, the below query counts the number of different API event (service calls) made by Spinnaker in the last hour, grouped by eventname (API call) and error code.
 
 ```
 SELECT count(*) AS Total,

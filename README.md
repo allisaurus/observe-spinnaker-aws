@@ -11,6 +11,7 @@ Spinnaker operators deploying to AWS often need visibility into what APIs Spinna
 - [Creating a trail](#creating-a-trail)
 - [Creating a table in Athena](#creating-a-table-in-athena)
 - [Query Spinnaker calls](#query-spinnaker-calls)
+- [Graphing CloudTrail activity](#graphing-cloudtrail-activity)
 - [Pricing](#pricing)
 
 <!-- tocstop -->
@@ -105,7 +106,7 @@ Enter, format, run your query, and view results in the Athena console:
 > IMAGE TBD
 
 
-## Graphing CloudTrail activity with Amazon CloudWatch Logs
+## Graphing CloudTrail activity
 
 If you want to visualize Spinnaker's CloudTrail activity, you can configure the trail to send data to Amazon CloudWatch Logs and use 'Insights' to run searches with [CWL Insights query syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html).
 

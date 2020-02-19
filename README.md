@@ -104,8 +104,26 @@ Enter, format, run your query, and view results in the Athena console:
 
 > IMAGE TBD
 
-**Things to note**
-* The above results are against an account/region running 1 ECS service with 3 tasks, with default rate limiting and resource caching configured in Clouddriver. Accounts running more services/tasks with different rate limiting applied will have different results.
+
+## Graphing CloudTrail activity with Amazon CloudWatch Logs
+
+If you want to visualize Spinnaker's CloudTrail activity, you can configure the trail to send data to Amazon CloudWatch Logs and use 'Insights' to run searches with [CWL Insights query syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html).
+
+1. In the page for your Spinnaker trail, go to the 'CloudWatch Logs' section and click "Configure".
+2. The default log group is `CloudTrail/DefaultLogGroup`; you can use this or enter your own. Click "Continue".
+3. You'll be redirected to a page for creating an IAM Role that allows CloudTrail to create log streams and put events. Click "Allow" at the bottom of the page. Once the role is created and validated, you'll be redirected to the CloudTrail console.
+4. Navigate to the Amazon CloudWatch console, and click on the "Insights" page in the left menu.
+5. In the drop-down at top, select the log group you created for your Spinnaker trail.
+6. Enter and run a query! Make sure to select the desired timeframe in the menu to the right of the log group field (default is 1 hour).
+
+Here's an example query that seraches for throttling exceptions seen by a 'Spinnaker' role:
+```
+stats count(*) by eventSource, eventName, awsRegion, errorCode
+| filter userIdentity.sessionContext.sessionIssuer.userName like 'Spinnaker'
+| filter errorCode like 'ThrottlingException'
+```
+
+More information about analyzing log data with CloudWatch Logs insight available in the [official docs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html).
 
 
 ## Pricing
@@ -115,5 +133,6 @@ Cost incurred by this setup varies by individual footprint/account, but will inc
 * S3 storage costs for AWS CloudTrail logs and Amazon Athena query results.
 * Certain AWS CloudTrail events older than 90 days.
 * Amazon Athena per-query charges by data scanned. 
+* If using Amazon CloudWatch Logs Insights, normal CWL log and event rates apply.
 
-More info and price calculators are available on the respective [S3](https://aws.amazon.com/s3/pricing/), [CloudTrail](https://aws.amazon.com/cloudtrail/pricing/), and [Athena](https://aws.amazon.com/athena/pricing/) pricing pages.
+More info and price calculators are available on the respective [S3](https://aws.amazon.com/s3/pricing/), [CloudTrail](https://aws.amazon.com/cloudtrail/pricing/), a[Athena](https://aws.amazon.com/athena/pricing/), and [CloudWatch](https://aws.amazon.com/cloudwatch/pricing/) pricing pages.

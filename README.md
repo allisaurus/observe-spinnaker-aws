@@ -41,12 +41,11 @@ For this example, I want to query the activity of a Spinnaker instance that assu
 1. Navigate the AWS CloudTrail console in `ca-central-1` (or the region where Spinnaker is deploying your resoruces).
 2. Click "View trails", then "Create trail".
 3. Give the new trail a name. I call mine `spinnaker-dev-instance`.
-4. Select "No" for whether the trail applies to all regions. 
-  * (If your Spinnaker install is deploying to multiple regions and you want to capture them all in one trail/table, you can select "Yes".)
-5. Leave 'Management' and 'Insight' event defaults as-is. These can be edited later if desired.
-6. Under 'Storage location' select whether to create a new bucket or use an existing one. I have one already, so I select "No", and find and select my `aws-athena-spinnaker-ca-central-1` bucket.
-7. Apply tags as desired.
-8. Click "Create".
+  * NOTE: trails created in the AWS console will be _global_. To create a trail for a specific region, use [the `awscli`](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail-by-using-the-aws-cli.html#cloudtrail-create-and-update-a-trail-by-using-the-aws-cli-options).
+4. Leave 'Management' and 'Insight' event defaults as-is. These can be edited later if desired.
+5. Under 'Storage location' select whether to create a new bucket or use an existing one. I have one already, so I select "No", and find and select my `aws-athena-spinnaker-ca-central-1` bucket.
+6. Apply tags as desired.
+7. Click "Create".
 
 After the trail is created, it should just take a minute or two for your CloudTrail logs start appearing in the specified S3 bucket under the path `AWSLogs/[ACCOUNT_NUM]/CloudTrail/[REGION]/[YEAR]/[MONTH]/[DAY]/`
 
@@ -61,10 +60,10 @@ After the trail is created, it should just take a minute or two for your CloudTr
 Querying AWS CloudTrail logs is a common enough use case that there's a console shortcut which will do most setup automatically.
 
 1. In the CloudTrail console where you created the trail, navigate to "Event history".
-2. Click "Run advanced queries in Amazon Athena".
+2. Click "Create Athena table".
 3. In the modal "Storage location", select the bucket which contains the logs from our newly created trail, `aws-athena-spinnaker-ca-central-1`. 
 4. Click "Create table".
-5. Once created, click the button that takes you to the Athena console to run some queries.
+5. Once created, click the table link in the "success" alert to navigate to the Athena console to set up queries.
 
 ### Command line instructions
 * TBD
